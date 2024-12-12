@@ -5,6 +5,7 @@ import { initializeSocketServer } from './sockets/socketServer';
 import errorHandler from './middlewares/errorHandler';
 import userRoutes from "./routes/userRoutes"
 import { ConnectToMongo } from './config/mongo';
+import appointmentRoutes from "./routes/appointmentRoutes"
 import dotenv from "dotenv"
 dotenv.config();
 const app = express();
@@ -56,6 +57,7 @@ app.get('/', (req, res) => {
 });
 
 app.use("/users",userRoutes)
+app.use("/appointments",appointmentRoutes)
 app.use(errorHandler);
 
 

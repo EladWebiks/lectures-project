@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-// Define the User Schema
 const userSchema: Schema = new Schema({
     username: {
         type: String,
@@ -12,16 +11,20 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true,
     },
-}, { timestamps: true }); // Automatically adds createdAt and updatedAt fields
+    appointments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Appointment",
+        default: []
+    }]
+}, { timestamps: true });
 
-// Define the User model type by extending Document
 export interface UserModel extends Document {
     _id: mongoose.Types.ObjectId;
     username: string;
     passwordHash: string;
+    appointments: mongoose.Types.ObjectId[];
 }
 
-// Create the User Model
 const User = mongoose.model<UserModel>("User", userSchema);
 
 export default User;

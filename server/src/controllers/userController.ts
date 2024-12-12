@@ -19,8 +19,9 @@ export const register = async (
     console.log(req.body);
     const { username, password } = req.body;
     if (!username || !password) {
-      res.status(400);
-      throw new Error("Passowrd and or username is missing");
+      const message = "Passowrd and or username is missing";
+      res.status(400).json({ success:false, message });
+      throw new Error(message);
     }
     const user: UserModel = await createUser(username, password);
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {

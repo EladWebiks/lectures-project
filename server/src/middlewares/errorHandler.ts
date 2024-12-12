@@ -3,17 +3,17 @@ import { Request, Response, NextFunction } from "express";
 const errorHandler = async (
   err: any,
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
-    console.log("erroring")
-  if (process.env.ENVIORMENT === "dev") {
+  if (process.env.ENVIRONMENT === "dev") {
     res.status(500).json({ stack: err.stack });
-    return;
+  } else {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
-  res.status(500).json({
-    succsess: false,
-    message: err.message,
-  });
 };
 
 export default errorHandler;
