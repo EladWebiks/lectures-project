@@ -8,6 +8,4 @@ router.post("/register", userController.register);
 
 router.post("/login", userController.login);
 
-router.get("/getuser",authMiddleware ,userController.getUser);
-
 export default router;

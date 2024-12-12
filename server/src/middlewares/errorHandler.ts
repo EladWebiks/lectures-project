@@ -5,6 +5,7 @@ const errorHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+    console.log("erroring")
   if (process.env.ENVIORMENT === "dev") {
     res.status(500).json({ stack: err.stack });
     return;
