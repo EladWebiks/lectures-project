@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../models/User.js";
+import { UserModel } from "../models/User";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import * as userService from "../services/userService";
-
+import {authenticateUser, createUser, getUser as serviceGetUser} from "../services/userServices"
 dotenv.config();
 
 // Route: /users/register
@@ -21,7 +20,7 @@ export const register = async (
       res.status(400);
       throw new Error("Passowrd and or username is missing");
     }
-    const user: User = await userService.createUser(username, password);
+    const user: UserModel = await createUser(username, password);
     res.status(201).json({ id: user.id });
   } catch (error) {
     next(error);
@@ -44,7 +43,7 @@ export const login = async (
       throw new Error("Passowrd and or username is missing");
     }
 
-    const user = await userService.authenticateUser(username, password);
+    const user = await authenticateUser(username, password);
     if (!user) {
       res.status(401);
       throw new Error("Authentication failed");
@@ -70,7 +69,7 @@ export const getUser = async (
   try{
 
     const userId = req.user.id
-    const user:any = await userService.getUser(userId)
+    const user:any = await serviceGetUser(userId)
     if(!user){
       res.status(404);
       throw new Error('user doesnt exist');

@@ -15,7 +15,7 @@ const userSchema: Schema = new Schema({
 }, { timestamps: true }); // Automatically adds createdAt and updatedAt fields
 
 // Define the User model type by extending Document
-interface UserModel extends Document {
+export interface UserModel extends Document {
     _id: mongoose.Types.ObjectId;
     username: string;
     passwordHash: string;

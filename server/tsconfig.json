@@ -9,6 +9,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/sockets/socketServer.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
 }
