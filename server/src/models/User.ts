@@ -11,6 +11,10 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true,
     },
+    isAdmin:{
+        type: Boolean,
+        default: false
+    },
     appointments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Appointment",
@@ -22,6 +26,7 @@ export interface UserModel extends Document {
     _id: mongoose.Types.ObjectId;
     username: string;
     passwordHash: string;
+    isAdmin: Boolean;
     appointments: mongoose.Types.ObjectId[];
 }
 

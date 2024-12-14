@@ -4,6 +4,8 @@ import authMiddleware from "../middlewares/authMiddleware";
 
 const router: Router = express.Router();
 
-router.post("/makeAppointment",authMiddleware, appointmentController.makeAppointment);
-
+router.post("/",authMiddleware, appointmentController.makeAppointment);
+router.get("/", authMiddleware, appointmentController.getAppointments)
+router.patch("/:id", authMiddleware,appointmentController.editAppointment)
+router.delete("/:id",authMiddleware,appointmentController.deleteAppointment)
 export default router;

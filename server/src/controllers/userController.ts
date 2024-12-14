@@ -16,7 +16,6 @@ export const register = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    console.log(req.body);
     const { username, password } = req.body;
     if (!username || !password) {
       const message = "Passowrd and or username is missing";
