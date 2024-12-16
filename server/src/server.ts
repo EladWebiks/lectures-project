@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
 import { initializeSocketServer } from './sockets/socketServer';
-import errorHandler from './middlewares/errorHandler';
+import {errorHandler} from './middlewares/errorHandler';
 import userRoutes from "./routes/userRoutes"
 import { ConnectToMongo } from './config/mongo';
 import appointmentRoutes from "./routes/appointmentRoutes"
