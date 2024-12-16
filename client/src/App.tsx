@@ -5,26 +5,24 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Layout from "./pages/Layout/Layout";
 
 const App: FC = () => {
-
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout/>,
+      element: <Layout />,
       // layout
       children: [
-        { path:"", element: <HomePage /> },
+        { path: "", element: <HomePage /> },
         {
           path: "/reader",
           element: <HomePage />,
         },
-        { path: "/login", element: <LoginPage /> },
       ],
     },
+    { path: "/login", element: <LoginPage /> },
     { path: "/sign-up", element: <HomePage /> },
   ]);
-  
 
-  return  <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 };
 
 export default App;
