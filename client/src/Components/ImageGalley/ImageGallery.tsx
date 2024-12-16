@@ -9,7 +9,7 @@ const ImageGallery: FC = () => {
       <div className="parent">
         {image.map((img, index) => {
           return (
-            <div style={{backgroundImage: `url(${img.img})`, backgroundSize:"cover", backgroundPosition:"center center"}}  key={img.title} className={"div" + (index + 1) +" elad"}>
+            <div style={{backgroundImage: `url(${img.img})`, backgroundSize:"cover", backgroundPosition:"center center"}}  key={img.title} className={"div" + (index + 1) +" grid-item"}>
              
             </div>
           );
