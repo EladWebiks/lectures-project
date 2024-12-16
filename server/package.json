@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "rm -rf dist && cross-env NODE_ENV=test jest --verbose --detectOpenHandles --forceExit",
-    "build": "tsc",
-    "dev": "ts-node src/server.ts",
-    "start": "node dist/server.js"
+    "start": "ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
     "socket.io": "^4.8.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

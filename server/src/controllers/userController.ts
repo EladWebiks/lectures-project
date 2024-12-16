@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../models/User.js";
+import { UserModel } from "../models/User";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import * as userService from "../services/userService";
-
-dotenv.config();
+import {
+  authenticateUser,
+  createUser,
+} from "../services/userServices";
 
 // Route: /users/register
 // Method: POST
 // Body: {username, pssword}
-// returns {id}
+// returns { success: boolean, token: string, message: string}
 export const register = async (
   req: Request,
   res: Response,
@@ -18,11 +18,15 @@ export const register = async (
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      res.status(400);
-      throw new Error("Passowrd and or username is missing");
+      const message = "Passowrd and or username is missing";
+      res.status(400).json({ success:false, message });
+      throw new Error(message);
     }
-    const user: User = await userService.createUser(username, password);
-    res.status(201).json({ id: user.id });
+    const user: UserModel = await createUser(username, password);
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
+        expiresIn: process.env.TOKENDURATION || "1h",
+      });
+    res.status(201).json({ token, success: true, message: "registered successfully" });
   } catch (error) {
     next(error);
   }
@@ -31,7 +35,7 @@ export const register = async (
 // Route: /users/login
 // Method: POST
 // Body: {username, pssword}
-// Returns: {token}
+// Returns: {success:bolean,token:string, message: string}
 export const login = async (
   req: Request,
   res: Response,
@@ -40,45 +44,22 @@ export const login = async (
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      res.status(400);
-      throw new Error("Passowrd and or username is missing");
+      const message = "Passowrd and or username is missing";
+      res.status(400).json({ success:false, message });
+      throw new Error(message);
     }
 
-    const user = await userService.authenticateUser(username, password);
+    const user = await authenticateUser(username, password);
     if (!user) {
-      res.status(401);
-      throw new Error("Authentication failed");
+      const message = "Authentication failed";
+      res.status(401).json({ success:false, message });
+      throw new Error(message);
     }
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
-      expiresIn: "1h",
+      expiresIn:  process.env.TOKENDURATION || "1h",
     });
-    res.status(200).json({ token });
+    res.status(200).json({ token, success: true, message: "Logged in successfully" });
   } catch (error) {
     next(error);
-  }
-};
-
-// Route: /users/getUser
-// Method: GET
-// Body: {}
-// Returns: User + firstname + lastname+ imagUrl
-export const getUser = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try{
-
-    const userId = req.user.id
-    const user:any = await userService.getUser(userId)
-    if(!user){
-      res.status(404);
-      throw new Error('user doesnt exist');
-    }
-    console.log(user);
-    
-    res.status(200).json({...user,imageUrl:"https://avatars.githubusercontent.com/u/48385417?v=4",firstName:"Elad",lastName:"Harel"})
-  }catch(error){
-    next(error)
   }
 };

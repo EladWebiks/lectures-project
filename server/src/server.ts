@@ -1,13 +1,19 @@
 import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
-import { initializeSocketServer } from './socketServer';
-
+import { initializeSocketServer } from './sockets/socketServer';
+import {errorHandler} from './middlewares/errorHandler';
+import userRoutes from "./routes/userRoutes"
+import { ConnectToMongo } from './config/mongo';
+import appointmentRoutes from "./routes/appointmentRoutes"
+import dotenv from "dotenv"
+dotenv.config();
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 const httpServer = createServer(app);
 
+ConnectToMongo();
 // Initialize Socket.IO
 const io = initializeSocketServer(httpServer);
 
@@ -49,6 +55,11 @@ app.get('/', (req, res) => {
     </html>
   `);
 });
+
+app.use("/users",userRoutes)
+app.use("/appointments",appointmentRoutes)
+app.use(errorHandler);
+
 
 const PORT = process.env.PORT || 5000;
 httpServer.listen(PORT, () => {
