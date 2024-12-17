@@ -7,13 +7,13 @@ interface CarouselProps {
 }
 const Carousel: FC<CarouselProps> = ({ items }) => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 7000,
-    autoplaySpeed: 2000,
+    speed: 500,
+    autoplaySpeed: 4500,
     cssEase: "linear",
   };
   return (
