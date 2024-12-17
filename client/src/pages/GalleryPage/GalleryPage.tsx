@@ -9,7 +9,7 @@ const GalleryPage: FC = () => {
   return (
     <div className="GalleryPage page">
       <ImageGallery />
-      <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <Carousel
           items={arr.map((item) => (
             <CarouselItem key={item} index={item} />

@@ -1,6 +1,6 @@
 .CarouselItem{
-    width: 100px;
-    height: 100px;
+    width: 250px;
+    max-height: 160px;
     background-color: #fff;
     border: solid 2px black;
   }
