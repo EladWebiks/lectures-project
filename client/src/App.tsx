@@ -10,6 +10,7 @@ import theme from "./theme.ts";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import ContactPage from "./pages/ContactPage/ContactPage.tsx";
+import LogInPage from "./pages/LogInPage.tsx/LogInPage.tsx";
 const App: FC = () => {
   const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const App: FC = () => {
         {
           path: "/contact",
           element: <ContactPage />,
+        },
+        {
+          path: "/login",
+          element: <LogInPage/>,
         },
       ],
     },

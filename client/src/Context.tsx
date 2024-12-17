@@ -18,7 +18,7 @@ export const useMyContext = (): MyContextType => {
 
 export const MyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const value: MyContextType = {
-    Links: {"about us": "about", "gallery": "gallery","home": '/',"contact us": 'contact'},
+    Links: {"about us": "about", "gallery": "gallery","home": '/',"contact us": 'contact',"log in": "login"},
     image: itemData
   };
 
