@@ -1,6 +1,27 @@
-.CarouselItem{
-    width: 149px;
-    height: 116px;
-    background-color: #fff;
-    border: solid 2px black;
-  }
+
+.CarouselItem {
+  width: 75%;
+  background-color: #ffffff51;
+  border: solid 2px #a18c0055;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3%;
+  margin-left: 10%;
+}
+.carousel-item-header {
+  font-size: 1.6rem;
+}
+.carousel-item-p {
+  direction: rtl;
+  margin: 1rem;
+}
+.carousel-item-img {
+  max-width: 90%;
+  width: 14rem;
+  max-height: 10rem;
+  object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+  object-position: center; /* Centers the image within the container */
+  border-radius: 0.5rem; /* Optional: Adds rounded corners */
+}
