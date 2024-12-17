@@ -15,6 +15,23 @@ const Carousel: FC<CarouselProps> = ({ items }) => {
     speed: 500,
     autoplaySpeed: 4500,
     cssEase: "linear",
+    swipe: true,
+    responsive: [
+      {
+        breakpoint: 768, // Mobile devices (width <= 768px)
+        settings: {
+          fade: true, // Use fade effect on mobile
+          slidesToShow: 1, // Single slide on mobile
+        },
+      },
+      {
+        breakpoint: 769, // Devices larger than 768px
+        settings: {
+          fade: false, // Disable fade for larger screens
+          slidesToShow: 3, // Show 3 slides for larger screens
+        },
+      },
+    ],
   };
   return (
     <div className="slider-container">
