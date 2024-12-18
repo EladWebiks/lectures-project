@@ -1,4 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { UserModel } from "./types/schemas";
+import axios from "axios";
+import { getUserByToken } from "./constants/uri";
 
 interface MyContextType {
   Links: Record<string, string>;
@@ -6,6 +9,9 @@ interface MyContextType {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   baseUrl: string;
+  user: UserModel | null;
+  setUser: React.Dispatch<React.SetStateAction<UserModel | null>>;
+  fetchUser: ()=>void
 }
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
@@ -21,8 +27,18 @@ export const useMyContext = (): MyContextType => {
 export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const baseUrl = import.meta.env.VITE_BURL || "No base url in env"
+  const baseUrl = import.meta.env.VITE_BURL || "No base url in env";
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<UserModel | null>(null);
+  const fetchUser = async () => {
+    const userData = await InitialFetchUser();
+    setUser(userData);
+  };
+  useEffect(() => {
+   
+
+    fetchUser();
+  }, []);
 
   const value: MyContextType = {
     Links: {
@@ -35,10 +51,33 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
     image: itemData,
     open,
     setOpen,
-    baseUrl
+    baseUrl,
+    user,
+    setUser,
+    fetchUser
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
+};
+
+export const InitialFetchUser = async (): Promise<UserModel | null> => {
+  const endpoint = import.meta.env.VITE_BURL + getUserByToken;
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await axios.get(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Fixed the header format
+      },
+    });
+
+    const user = response.data.user;
+    if (user) return user;
+    return null;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
 };
 
 const itemData = [

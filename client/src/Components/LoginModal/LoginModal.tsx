@@ -6,7 +6,7 @@ import "./LoginModal.css";
 import { login, register } from "../../constants/uri";
 
 const LoginModal = () => {
-  const { open, setOpen, baseUrl } = useMyContext();
+  const { open, setOpen, baseUrl, fetchUser} = useMyContext();
   const [isSignUp, setIsSignUp] = useState(false); // Toggle between Sign In and Sign Up
   const [formData, setFormData] = useState({
     email: "",
@@ -27,11 +27,15 @@ const LoginModal = () => {
   const handleSubmit = async () => {
     const endpoint = baseUrl+(isSignUp ? register : login);
     console.log("BASEURL "+ baseUrl)
-    console.log(endpoint)
     try {
       const response = await axios.post(endpoint, formData);
-      console.log("Response:", response.data);
-      alert(isSignUp ? "Registration successful!" : "Login successful!");
+      localStorage.setItem("authToken", response.data.token);
+      
+      if(response.data.success)
+      {
+        fetchUser();
+      alert(response.data.message);
+      }
       handleClose();
     } catch (error) {
       console.error("Error:", error);
