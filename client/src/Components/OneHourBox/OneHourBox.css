@@ -1,0 +1,10 @@
+.OneHourBox{
+    border: 1px solid black;
+    width: 77px;
+    max-height: 392px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    cursor: pointer;
+}
