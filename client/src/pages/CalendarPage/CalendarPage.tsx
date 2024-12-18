@@ -4,11 +4,13 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import './CalendarPage.css'
+import OrderAppointment from "../../Components/orderAppointment/OrderAppointment";
 
 const CalendarPage: React.FC = () => {
   const [events, setEvents] = useState<{ title: string; start: string }[]>([]);
   const [newEventTitle, setNewEventTitle] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [openModal,setOpenModal] = useState(false)
 
   const handleDateClick = (arg: DateClickArg) => {
     if(arg.date.getDay() === 5 || arg.date.getDay() === 6)
@@ -16,6 +18,7 @@ const CalendarPage: React.FC = () => {
       return;
     }
     setSelectedDate(arg.dateStr);
+    setOpenModal(true)
   };
 
   const addEvent = () => {
@@ -38,6 +41,7 @@ const CalendarPage: React.FC = () => {
 
   return (
     <div className="page" style={{ maxWidth: "900px", margin: "0 auto" }}>
+      {openModal && <OrderAppointment selectedDate = {selectedDate} setOpenModal = {setOpenModal}/>}
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         initialView="dayGridMonth"
