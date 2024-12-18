@@ -86,7 +86,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          {/* Center Section: AdbIcon */}
+          {/* Center Section: AdbIcon AD*/}
           <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
             <img src={IconWhite } className= {!scrolled ? "icon-color-dark": ""} style={{height:"3rem"}} alt="" />
           </Box>
