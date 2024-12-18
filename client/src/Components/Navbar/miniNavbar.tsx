@@ -9,14 +9,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import GoldIcon from "../../assets/GoldIcon.png"
 import IconWhite from "../../assets/WhiteIcon.png"
 import { useMyContext } from "../../Context";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css"
 
 function ResponsiveAppBar() {
-  const { Links } = useMyContext();
+  const { Links, setOpen } = useMyContext();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -86,7 +85,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          {/* Center Section: AdbIcon AD*/}
+          {/* Center Section: AdbIcon */}
           <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
             <img src={IconWhite } className= {!scrolled ? "icon-color-dark": ""} style={{height:"3rem"}} alt="" />
           </Box>
@@ -102,6 +101,12 @@ function ResponsiveAppBar() {
                 {key}
               </Button>
             ))}
+               <Button
+                onClick={() => setOpen(true)}
+                sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
+              >
+                Log in
+              </Button>
           </Box>
         </Toolbar>
       </Container>

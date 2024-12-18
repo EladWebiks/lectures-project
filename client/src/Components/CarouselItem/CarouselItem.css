@@ -1,11 +1,13 @@
 
 .CarouselItem {
   width: 75%;
+  height: 20rem;
+  max-height: 20rem;
   background-color: #ffffff51;
   border: solid 2px #a18c0055;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   border-radius: 3%;
   margin-left: 10%;

@@ -1,8 +1,11 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface MyContextType {
   Links: Record<string, string>;
   image: { img: string; title: string }[];
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  baseUrl: string;
 }
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
@@ -18,6 +21,9 @@ export const useMyContext = (): MyContextType => {
 export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const baseUrl = import.meta.env.VITE_BURL || "No base url in env"
+  const [open, setOpen] = useState(false);
+
   const value: MyContextType = {
     Links: {
       "about us": "about",
@@ -25,9 +31,11 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
       home: "/",
       "contact us": "contact",
       calendar: "calendar",
-      "log in": "login",
     },
     image: itemData,
+    open,
+    setOpen,
+    baseUrl
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

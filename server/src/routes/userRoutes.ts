@@ -8,4 +8,5 @@ router.post("/register", userController.register);
 
 router.post("/login", userController.login);
 
+router.get("/getUserByToken", authMiddleware, userController.getUserByToken)
 export default router;
