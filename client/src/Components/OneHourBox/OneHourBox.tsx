@@ -9,7 +9,7 @@ interface HourInterface{
 
 const OneHourBox:FC<HourInterface> = ({hour,setPickedHour,pickedHour}) => {
   return (
-    <div className='OneHourBox' style={{backgroundColor: pickedHour === hour? '#BFA25F' : 'white' }} onClick={()=>{setPickedHour(hour)}}>
+    <div className={pickedHour === hour ? `OneHourBox pickedHour` : `OneHourBox`} onClick={()=>{setPickedHour(hour)}}>
         {hour}
         </div>
   )

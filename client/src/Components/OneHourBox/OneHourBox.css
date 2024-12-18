@@ -8,3 +8,7 @@
     flex-wrap: wrap;
     cursor: pointer;
 }
+
+.pickedHour{
+    background-color: #BFA25F;
+}

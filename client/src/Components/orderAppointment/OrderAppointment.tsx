@@ -7,17 +7,10 @@ import OneHourBox from '../OneHourBox/OneHourBox';
 import theme from '../../theme';
 import { display } from '@mui/system';
 
+import freeTimes from '../../constant/tempHourArr';
 
 
-const freeTimes = [
-    "12:00","12:20","12:40",
-    "13:00","13:20","13:40",
-    "14:00","14:20","14:40",
-    "15:00","15:20","15:40",
-    "15:00","15:20","15:40",
-    "15:00","15:20","15:40",
-    "15:00","15:20","15:40",
-] 
+
 
 
 const style = (theme: any) => ({
