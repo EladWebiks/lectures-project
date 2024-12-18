@@ -1,0 +1,29 @@
+.login-modal-box {
+    width: 30vw;
+    max-width: 400px;
+    background-color: #fff;
+    color: #000;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .login-modal-box h6 {
+    margin-bottom: 16px;
+  }
+  
+  .login-modal-box p {
+    text-align: center;
+  }
+  
+  .login-modal-box button {
+    margin-top: 20px;
+  }
+  

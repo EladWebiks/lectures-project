@@ -4,13 +4,15 @@ const salt: number = parseInt(process.env.SALT || "10")
 // Create a new user
 export const createUser = async (
   username: string,
-  password: string
+  password: string,
+  email:string,
 ): Promise<UserModel> => {
   const passwordHash = await bcrypt.hash(password, salt);
 
   const newUser = new User({
     username,
     passwordHash,
+    email
   });
 
   await newUser.save();
@@ -19,10 +21,10 @@ export const createUser = async (
 
 // Authenticate a user
 export const authenticateUser = async (
-  username: string,
+  email: string,
   password: string
 ): Promise<UserModel | null> => {
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.passwordHash))) {
     return user;
@@ -36,3 +38,5 @@ export const getUser = async (id: string): Promise<UserModel | null> => {
   const user = await User.findById(id);
   return user;
 };
+export const getUserByEmail = async (email: string): Promise<boolean | null> => await User.findOne({email})
+ 

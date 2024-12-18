@@ -11,6 +11,18 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate: {
+          validator: function (email: string) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+          },
+          message: (props: any) => `${props.value} is not a valid email address!`,
+        },
+    },
     isAdmin:{
         type: Boolean,
         default: false
@@ -26,6 +38,7 @@ export interface UserModel extends Document {
     _id: mongoose.Types.ObjectId;
     username: string;
     passwordHash: string;
+    email:string,
     isAdmin: Boolean;
     appointments: mongoose.Types.ObjectId[];
 }
