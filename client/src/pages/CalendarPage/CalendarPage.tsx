@@ -3,6 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
+import './CalendarPage.css'
 
 const CalendarPage: React.FC = () => {
   const [events, setEvents] = useState<{ title: string; start: string }[]>([]);
@@ -10,6 +11,10 @@ const CalendarPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const handleDateClick = (arg: DateClickArg) => {
+    if(arg.date.getDay() === 5 || arg.date.getDay() === 6)
+    {
+      return;
+    }
     setSelectedDate(arg.dateStr);
   };
 
@@ -21,12 +26,18 @@ const CalendarPage: React.FC = () => {
     }
   };
 
+  const disabaledColorForWeekend =(arg: any)=>{
+    const date = new Date(arg.date);
+    const day = date.getUTCDay();
+    if(day === 4 || day ===5)
+      return 'weekend'
+    else{
+      return '';
+    }
+  }
+
   return (
-<<<<<<< HEAD
-    <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-=======
     <div className="page" style={{ maxWidth: "900px", margin: "0 auto" }}>
->>>>>>> e6389e9d779da0c0882c0b1870c547bcab4417b2
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -35,10 +46,12 @@ const CalendarPage: React.FC = () => {
           center: "title",
           right: "dayGridMonth,listWeek",
         }}
+        dayCellClassNames={disabaledColorForWeekend}
         dateClick={handleDateClick}
         events={events}
         selectable={true}
         editable={true}
+        
       />
 
       {selectedDate && (
