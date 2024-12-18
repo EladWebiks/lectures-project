@@ -6,7 +6,9 @@ const Layout = () => {
   return (
     <>
       <Navbar/>
+      <div style={{marginTop:"8vh"}}>
       <Outlet />
+      </div>
     </>
   );
 };

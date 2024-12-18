@@ -22,7 +22,11 @@ const CalendarPage: React.FC = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+=======
+    <div className="page" style={{ maxWidth: "900px", margin: "0 auto" }}>
+>>>>>>> e6389e9d779da0c0882c0b1870c547bcab4417b2
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         initialView="dayGridMonth"
