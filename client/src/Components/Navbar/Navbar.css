@@ -7,3 +7,11 @@
     justify-content: space-around;
     align-items: center;
 }
+.icon-color-dark
+{
+ filter:invert(70%) sepia(34%) saturate(560%) hue-rotate(15deg) brightness(95%)
+}
+.icon-color-light
+{
+    filter: invert(28%) sepia(63%) saturate(360%) hue-rotate(356deg) brightness(90%);
+}

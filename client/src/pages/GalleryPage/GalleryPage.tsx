@@ -12,51 +12,61 @@ const mockRecommandations : NailCareRecommendation[] = [
       username: "מיכל כהן",
       recommendation: "מומלץ להשתמש בקרם לחות לציפורניים כל ערב, זה באמת משפר את המראה והתחושה שלהן!",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "דני לוי",
       recommendation: "חובה להקפיד לשים שכבת בסיס לפני לק כדי להגן על הציפורניים משבירה.",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "שרון ישראלי",
       recommendation: "אני ממליצה להשתמש בשמן קוקוס לטיפוח הציפורניים והעור שמסביב. זה עשה פלאים לציפורניים שלי!",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "יעל אברהם",
       recommendation: "ניסיתי לשייף את הציפורניים בכיוון אחד בלבד וזה עזר למנוע סדקים, אבל זה דורש הרבה זמן.",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "אורן רוזן",
       recommendation: "חשוב לשתות הרבה מים! זה משפיע לא רק על העור, אלא גם על הציפורניים.",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "נועה כהן",
       recommendation: "אני ממליצה לשמור על תזונה מאוזנת עם הרבה ויטמינים - זה שיפר את החוזק של הציפורניים שלי.",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "גיל חן",
       recommendation: "ניסיתי להשתמש בשמן שקדים אבל לא ראיתי הבדל גדול. אולי כדאי לנסות משהו אחר.",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "מיכאל לוי",
       recommendation: "טיפ מצוין הוא לא לחתוך את הקוטיקולה, אלא לדחוף אותה בעדינות אחורה.",
       image: "https://via.placeholder.com/150",
+      date: "17.12.2024"
     },
     {
       username: "רחל ברקוביץ",
       recommendation: "חשוב להימנע מכסיסה של הציפורניים, זה עוזר לציפורניים לצמוח בריאות יותר.",
       image: "https://via.placeholder.com/150",
+       date: "17.12.2024"
     },
     {
       username: "אילנה ישראלי",
       recommendation: "אני משתמשת בחומר מחזק לציפורניים פעמיים בשבוע וזה עושה עבודה נהדרת.",
       image: "https://via.placeholder.com/150",
+       date: "17.12.2024"
     },
   ];
   

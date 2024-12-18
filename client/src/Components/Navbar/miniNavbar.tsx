@@ -1,61 +1,60 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useMyContext } from '../../Context';
-import { useNavigate } from 'react-router-dom';
-
+import React, { MouseEvent, useEffect, useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import GoldIcon from "../../assets/GoldIcon.png"
+import IconWhite from "../../assets/WhiteIcon.png"
+import { useMyContext } from "../../Context";
+import { useNavigate } from "react-router-dom";
+import "./Navbar.css"
 
 function ResponsiveAppBar() {
   const { Links } = useMyContext();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-
-  const handleCloseNavMenu = (value:string) => {
+  const handleCloseNavMenu = (value: string) => {
     setAnchorElNav(null);
-    navigate(value)
+    navigate(value);
   };
 
+  // Listen to scroll event
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <AppBar position="static">
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: scrolled ? "primary.main" : "transparent",
+        boxShadow: scrolled ? 3 : 0,
+        transition: "background-color 0.3s, box-shadow 0.3s",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* Left Section: Menu Icon for Small Screens */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -67,61 +66,47 @@ function ResponsiveAppBar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
+              onClose={() => setAnchorElNav(null)}
+              sx={{ display: { xs: "block", md: "none" } }}
             >
-              
               {Object.entries(Links).map(([key, value]) => (
-                <MenuItem key={key} onClick={()=>handleCloseNavMenu(value)}>
-                  <Typography sx={{ textAlign: 'center' }}>{key}</Typography>
+                <MenuItem key={key} onClick={() => handleCloseNavMenu(value)}>
+                  <Typography sx={{ textAlign: "center" }}>{key}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          
-             {Object.entries(Links).map(([key, value]) => (
-        <Button
-        key={key}
-        onClick={()=>handleCloseNavMenu(value)}
-        sx={{ my: 2, color: 'white', display: 'block' }}
-      >
-        {key}
-      </Button>
-          
-        ))}
+
+          {/* Center Section: AdbIcon */}
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+            <img src={IconWhite } className= {!scrolled ? "icon-color-dark": ""} style={{height:"3rem"}} alt="" />
+          </Box>
+
+          {/* Right Section: Buttons for Large Screens */}
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}>
+            {Object.entries(Links).map(([key, value]) => (
+              <Button
+                key={key}
+                onClick={() => handleCloseNavMenu(value)}
+                sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
+              >
+                {key}
+              </Button>
+            ))}
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;
