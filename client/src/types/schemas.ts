@@ -8,6 +8,7 @@ export interface UserModel {
 export interface AppointmentModel {
     _id:string;
     description?: string;
+    user: string;
     start: Date;
     end: Date;
 }
