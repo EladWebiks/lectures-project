@@ -30,7 +30,7 @@ const card = (
 
 export default function OutlinedCard() {
   return (
-    <Box sx={{ minWidth: 275,}}>
+    <Box>
       <Card sx={{
         backgroundColor: '#dedbd3', // Custom background color
         padding: 2, // Optional: Add some padding
