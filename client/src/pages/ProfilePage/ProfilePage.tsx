@@ -12,10 +12,10 @@ const ProfilePage = () => {
           className="TopBackground"
         ></div>
         <header className="header">
-          <div>
+          <div className="userDetails">
             <h2>ohad rot</h2>
-            <h4>ohadroth@gmail.com</h4>
-            <h4>0654-1323112</h4>
+            <h3>ohadroth@gmail.com</h3>
+            <h3>0654-1323112</h3>
           </div>
           <div>
             <Button size="large" variant="contained">
