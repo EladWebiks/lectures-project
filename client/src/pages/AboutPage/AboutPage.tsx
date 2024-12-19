@@ -1,10 +1,11 @@
 import React from 'react'
 import './AboutPage.css'
+import ProfilePage from '../ProfilePage/ProfilePage'
 
 const AboutPage = () => {
   return (
     <main className='AboutPage page'>
-      <h1>about</h1>
+      <ProfilePage/>
     </main>
   )
 }
