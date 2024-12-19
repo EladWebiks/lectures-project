@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./Navbar.css"
 
 function ResponsiveAppBar() {
-  const { Links, setOpen } = useMyContext();
+  const { Links, setOpen,user, logOut} = useMyContext();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -101,12 +101,20 @@ function ResponsiveAppBar() {
                 {key}
               </Button>
             ))}
-               <Button
+            {user ? <Button
+                onClick={logOut}
+                sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
+              >
+                Log out
+              </Button>
+              :
+              <Button
                 onClick={() => setOpen(true)}
                 sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
               >
                 Log in
-              </Button>
+              </Button>}
+               
           </Box>
         </Toolbar>
       </Container>
