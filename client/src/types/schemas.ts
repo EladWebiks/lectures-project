@@ -5,9 +5,13 @@ export interface UserModel {
     isAdmin: Boolean;
     appointments: AppointmentModel[];
 }
-export interface AppointmentModel extends Document {
+export interface AppointmentModel {
     _id:string;
     description?: string;
     start: Date;
     end: Date;
+}
+export interface toastData{
+    type: string,
+    content: string
 }
