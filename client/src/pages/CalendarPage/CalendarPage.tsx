@@ -3,22 +3,21 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
-import './CalendarPage.css'
+import "./CalendarPage.css";
 import OrderAppointment from "../../Components/orderAppointment/OrderAppointment";
 
 const CalendarPage: React.FC = () => {
   const [events, setEvents] = useState<{ title: string; start: string }[]>([]);
   const [newEventTitle, setNewEventTitle] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [openModal,setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
 
   const handleDateClick = (arg: DateClickArg) => {
-    if(arg.date.getDay() === 5 || arg.date.getDay() === 6)
-    {
+    if (arg.date.getDay() === 5 || arg.date.getDay() === 6) {
       return;
     }
     setSelectedDate(arg.dateStr);
-    setOpenModal(true)
+    setOpenModal(true);
   };
 
   const addEvent = () => {
@@ -29,19 +28,23 @@ const CalendarPage: React.FC = () => {
     }
   };
 
-  const disabaledColorForWeekend =(arg: any)=>{
+  const disabaledColorForWeekend = (arg: any) => {
     const date = new Date(arg.date);
     const day = date.getUTCDay();
-    if(day === 4 || day ===5)
-      return 'weekend'
-    else{
-      return '';
+    if (day === 4 || day === 5) return "weekend";
+    else {
+      return "";
     }
-  }
+  };
 
   return (
     <div className="page" style={{ maxWidth: "900px", margin: "0 auto" }}>
-      {openModal && <OrderAppointment selectedDate = {selectedDate} setOpenModal = {setOpenModal}/>}
+      {openModal && (
+        <OrderAppointment
+          selectedDate={selectedDate}
+          setOpenModal={setOpenModal}
+        />
+      )}
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -55,7 +58,6 @@ const CalendarPage: React.FC = () => {
         events={events}
         selectable={true}
         editable={true}
-        
       />
 
       {selectedDate && (

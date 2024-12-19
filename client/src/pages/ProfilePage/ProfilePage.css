@@ -1,0 +1,76 @@
+.ProfilePage{
+    display: flex;
+    align-items: center;
+    
+}
+.pageLayout{
+    width: 70%;
+    max-height: 80%;
+    background-color: #e7e5df;
+    border-radius: 5%;
+    padding-bottom: 5%;
+}
+
+
+.header{
+    
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 4% 10% 2% 10%;
+    
+}
+
+.TopBackground{
+    /* width: 80%; */
+    height: 100px;
+    border: 1px solid black;
+    background: rgb(191,162,95);
+    background: linear-gradient(90deg, rgba(191,162,95,1) 13%, rgba(128,119,92,1) 75%);
+}
+
+.appointmenttDetails{
+    margin-top: 4%;
+    /* width: 65%; */
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* padding: 4% 5% 5% 5%; */
+    /* min-width: 275px;
+    min-height: 275px; */
+}
+
+
+h3{
+    color: rgb(160, 152, 152);
+    margin-top: 10px;
+
+}
+
+
+#userName{
+    font-family:Apple Chancery, cursive;
+    font-size: 3em;
+}
+
+.AppointmentHistory{
+   
+}
+
+@media(max-width: 768px)
+{
+    .appointmenttDetails{
+    margin-top: 4%;
+    /* width: 65%; */
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    gap: 5px;
+    /* padding: 4% 5% 5% 5%; */
+    /* min-width: 275px;
+    min-height: 275px; */
+}
+
+
+}
