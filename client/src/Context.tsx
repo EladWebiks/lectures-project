@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { UserModel } from "./types/schemas";
+import { toastData, UserModel } from "./types/schemas";
 import axios from "axios";
 import { getUserByToken } from "./constants/uri";
 
@@ -11,7 +11,10 @@ interface MyContextType {
   baseUrl: string;
   user: UserModel | null;
   setUser: React.Dispatch<React.SetStateAction<UserModel | null>>;
-  fetchUser: ()=>void
+  fetchUser: ()=>void;
+  logOut: () => void
+  toastData: toastData | null
+  setToastData: React.Dispatch<React.SetStateAction<toastData | null>>
 }
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
@@ -30,10 +33,17 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
   const baseUrl = import.meta.env.VITE_BURL || "No base url in env";
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<UserModel | null>(null);
+  const [toastData, setToastData] = useState<toastData| null>(null);
   const fetchUser = async () => {
     const userData = await InitialFetchUser();
     setUser(userData);
   };
+  const logOut = () =>{
+    localStorage.setItem("authToken", "");
+    setUser(null);
+    setToastData({type:"info", content:"Logged out successfully"})
+    
+  }
   useEffect(() => {
    
 
@@ -54,13 +64,16 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
     baseUrl,
     user,
     setUser,
-    fetchUser
+    fetchUser,
+    logOut,
+    setToastData,
+    toastData
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
 };
 
-export const InitialFetchUser = async (): Promise<UserModel | null> => {
+const InitialFetchUser = async (): Promise<UserModel | null> => {
   const endpoint = import.meta.env.VITE_BURL + getUserByToken;
   const token = localStorage.getItem("authToken");
 
@@ -79,6 +92,9 @@ export const InitialFetchUser = async (): Promise<UserModel | null> => {
     return null;
   }
 };
+
+
+
 
 const itemData = [
   {

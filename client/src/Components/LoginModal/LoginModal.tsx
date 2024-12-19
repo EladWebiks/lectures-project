@@ -6,7 +6,7 @@ import "./LoginModal.css";
 import { login, register } from "../../constants/uri";
 
 const LoginModal = () => {
-  const { open, setOpen, baseUrl, fetchUser} = useMyContext();
+  const { open, setOpen, baseUrl, fetchUser, setToastData} = useMyContext();
   const [isSignUp, setIsSignUp] = useState(false); // Toggle between Sign In and Sign Up
   const [formData, setFormData] = useState({
     email: "",
@@ -34,12 +34,14 @@ const LoginModal = () => {
       if(response.data.success)
       {
         fetchUser();
-      alert(response.data.message);
+        const content = response.data.message || "User logged in successfully"
+      setToastData({content, type: "success"});
       }
       handleClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      const content = error?.response?.data?.message || "An error occurred. Please try again."
+      setToastData({content, type: "error"});
     }
   };
 
