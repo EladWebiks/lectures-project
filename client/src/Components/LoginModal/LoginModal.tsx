@@ -4,8 +4,11 @@ import axios from "axios";
 import { useMyContext } from "../../Context";
 import "./LoginModal.css";
 import { login, register } from "../../constants/uri";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = () => {
+
+  const navigate = useNavigate();
   const { open, setOpen, baseUrl, fetchUser, setToastData} = useMyContext();
   const [isSignUp, setIsSignUp] = useState(false); // Toggle between Sign In and Sign Up
   const [formData, setFormData] = useState({
@@ -37,7 +40,13 @@ const LoginModal = () => {
         const content = response.data.message || "User logged in successfully"
       setToastData({content, type: "success"});
       }
+      else
+      {
+        const content = "Failed to log in"
+        setToastData({content, type: "error"});
+      }
       handleClose();
+      navigate('/profile')
     } catch (error: any) {
       console.error("Error:", error);
       const content = error?.response?.data?.message || "An error occurred. Please try again."
