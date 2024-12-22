@@ -20,6 +20,7 @@ const freeTimes = [
   "17:00",
   "17:30",
   "18:00",
+  
 ];
 
 export default freeTimes;

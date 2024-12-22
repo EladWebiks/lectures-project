@@ -101,12 +101,20 @@ function ResponsiveAppBar() {
                 {key}
               </Button>
             ))}
-            {user ? <Button
+            {user ?<> 
+              <Button
+                onClick={() =>handleCloseNavMenu("profile")}
+                sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
+              >
+                Profile
+              </Button>
+            <Button
                 onClick={logOut}
                 sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
               >
                 Log out
               </Button>
+              </>
               :
               <Button
                 onClick={() => setOpen(true)}

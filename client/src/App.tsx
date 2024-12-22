@@ -10,6 +10,7 @@ import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import ContactPage from "./pages/ContactPage/ContactPage.tsx";
 import CalendarPage from "./pages/CalendarPage/CalendarPage.tsx";
+import ProfilePage from "./pages/ProfilePage/ProfilePage.tsx";
 const App: FC = () => {
   const router = createBrowserRouter([
     {
@@ -18,6 +19,7 @@ const App: FC = () => {
       // layout
       children: [
         { path: "", element: <HomePage /> },
+        {path:"/profile", element: <ProfilePage/>},
         {
           path: "/gallery",
           element: <GalleryPage />,
@@ -39,7 +41,7 @@ const App: FC = () => {
     { path: "/login", element: <LoginPage /> },
     { path: "/sign-up", element: <HomePage /> },
   ]);
-
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
