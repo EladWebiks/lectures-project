@@ -8,6 +8,8 @@ import theme from "../../theme";
 import { Container, display } from "@mui/system";
 
 import freeTimes from "../../constants/tempHourArr";
+import axios from "axios";
+import { useMyContext } from "../../Context";
 
 const style = (theme: any) => ({
   position: "absolute",
@@ -35,8 +37,42 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
   const handleClose = () => setOpen(false);
   const [pickedHour, setPickedHour] = React.useState<string>("");
 
+  const {user} = useMyContext();
+
   const saveTheDate = () => {
-    ///// add appoitnment to the db
+    // let endhour:any= pickedHour.split(":") 
+    // endhour = `${(Number(endhour[1])/60+Number(endhour[0]))}:${(Number(endhour[1])+(Number(import.meta.env.VITE_MINMARGIN))%60)}`
+    const start = new Date(`${selectedDate}T${pickedHour}:00.152Z`).toISOString();
+
+    let end : Date | string = new Date(`${selectedDate}T${pickedHour}:00.152Z`); // Initialize the end date object
+    end.setMinutes(end.getMinutes() + Number(import.meta.env.VITE_MINMARGIN)); // Add the minutes
+    end = end.toISOString(); // Convert back to ISO string
+    
+    console.log(start);
+    console.log(end);
+    const token = localStorage.getItem("authToken");
+    axios.post(
+      `${import.meta.env.VITE_BURL}/appointments`,
+      {
+        start,
+        end,
+        description: "dont forget to add description input",
+        id: user?._id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Fixed the header format
+        },
+      }
+    )
+      .then(() => {
+        console.log('save date');
+      })
+      .catch((e) => {
+        throw new Error(e);
+      });
+    
+    
     setOpenModal(false);
   };
 
