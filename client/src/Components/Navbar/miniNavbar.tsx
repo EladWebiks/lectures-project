@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./Navbar.css"
 
 function ResponsiveAppBar() {
-  const { Links, setOpen,user, logOut} = useMyContext();
+  const { Links, setOpen,user, logOut, secretLinks} = useMyContext();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -102,12 +102,16 @@ function ResponsiveAppBar() {
               </Button>
             ))}
             {user ?<> 
+              
+              {Object.entries(secretLinks).map(([key, value]) => (
               <Button
-                onClick={() =>handleCloseNavMenu("profile")}
+                key={key}
+                onClick={() => handleCloseNavMenu(value)}
                 sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}
               >
-                Profile
+                {key}
               </Button>
+            ))}
             <Button
                 onClick={logOut}
                 sx={{ my: 2, color: `${scrolled ? "text.primary":"text.secondary"}`, display: "block" }}

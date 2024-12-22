@@ -6,13 +6,15 @@ export const createUser = async (
   username: string,
   password: string,
   email:string,
+  phoneNumber:string
 ): Promise<UserModel> => {
   const passwordHash = await bcrypt.hash(password, salt);
 
   const newUser = new User({
     username,
     passwordHash,
-    email
+    email,
+    phoneNumber
   });
 
   await newUser.save();
@@ -39,4 +41,5 @@ export const getUser = async (id: string): Promise<UserModel | null> => {
   return user;
 };
 export const getUserByEmail = async (email: string): Promise<boolean | null> => await User.findOne({email})
+export const getUserByPhoneNumber = async (phoneNumber: string): Promise<boolean | null> => await User.findOne({phoneNumber})
  

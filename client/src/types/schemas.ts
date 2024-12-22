@@ -1,7 +1,8 @@
 export interface UserModel {
     _id:string;
     username: string;
-    email:string,
+    email:string;
+    phoneNumber: string;
     isAdmin: Boolean;
     appointments: AppointmentModel[];
 }

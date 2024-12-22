@@ -5,6 +5,7 @@ import { getUserByToken } from "./constants/uri";
 
 interface MyContextType {
   Links: Record<string, string>;
+  secretLinks: Record<string,string>;
   image: { img: string; title: string }[];
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,7 +54,10 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
       gallery: "gallery",
       home: "/",
       "contact us": "contact",
-      calendar: "calendar",
+    },
+    secretLinks:{
+      profile:"profile",
+      calendar:"calendar"
     },
     image: itemData,
     open,
