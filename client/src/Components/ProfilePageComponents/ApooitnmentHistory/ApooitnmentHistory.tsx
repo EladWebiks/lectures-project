@@ -30,8 +30,11 @@ const ApooitnmentHistory : React.FC <AppointmentsHistoryInterFace>= ({user})=> {
   return (
     <Box>
       <Card sx={{
+        maxHeight: '150px',
+        overflowY: 'auto', // Enable vertical scrolling
+        scrollbarWidth: 'none',
         backgroundColor: '#dedbd3', // Custom background color
-        padding: 2, // Optional: Add some padding
+        padding: 0, // Optional: Add some padding
         borderRadius: 2, // Optional: Add border radius for rounded corners
       }} variant="outlined">{card}</Card>
     </Box>
