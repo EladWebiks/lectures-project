@@ -29,7 +29,7 @@ const ProfilePage = () => {
             <span>{getTheDate()}</span>
             <h2 id="userName">{user?.username}</h2>
             <h3>{user?.email}</h3>
-            <h3>0654-1323112</h3>
+            <h3>{user?.phoneNumber}</h3>
           </div>
           <div>
             <Button size="large" variant="contained">
@@ -39,7 +39,7 @@ const ProfilePage = () => {
         </header>
         <div className="appointmenttDetails">
           <div className="AppointmentHistory">
-            <ApooitnmentHistory/>
+            <ApooitnmentHistory user= {user}/>
           </div>
           <div className="nextAppointment">
             <NextAppointment user={user} />
