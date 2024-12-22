@@ -36,6 +36,10 @@ const App: FC = () => {
           path: "/calendar",
           element: <CalendarPage />,
         },
+        {
+          path: "/profile",
+          element: <ProfilePage/>,
+        },
       ],
     },
     { path: "/login", element: <LoginPage /> },

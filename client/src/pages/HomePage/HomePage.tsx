@@ -10,7 +10,7 @@ const HomePage: FC = () => {
   const closeAppointment = closestAppointment(user)
   return (
     <main className="HomePage page">
-      {user ? <h1>{user.username}</h1> : <h1>Loading...</h1>}
+      {user ? <h1>{user.username}</h1> : <h1>Waiting for user...</h1>}
       <h3>{closeAppointment ? closeAppointment?.description : ""}</h3>
       <h3>{closeAppointment ?closeAppointment?.start.toString().split(' ').slice(0,5).join(" ") : ""}</h3>
 
