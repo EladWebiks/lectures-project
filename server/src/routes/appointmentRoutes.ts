@@ -8,4 +8,5 @@ router.post("/",authMiddleware, appointmentController.makeAppointment);
 router.get("/", authMiddleware, appointmentController.getAppointments)
 router.patch("/:id", authMiddleware,appointmentController.editAppointment)
 router.delete("/:id",authMiddleware,appointmentController.deleteAppointment)
+router.get("/:date",authMiddleware,appointmentController.getAppointmentsByDate)
 export default router;
