@@ -5,11 +5,12 @@ import {
   authenticateUser,
   createUser,
   getUserByEmail,
+  getUserByPhoneNumber,
 } from "../services/userServices";
 
 // Route: /users/register
 // Method: POST
-// Body: {username, pssword}
+// Body: {username, pssword, email, phoneNumber}
 // returns { success: boolean, token: string, message: string}
 export const register = async (
   req: Request,
@@ -17,18 +18,18 @@ export const register = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { username, password, email } = req.body;
-    if (!username || !password || !email) {
+    const { username, password, email, phoneNumber } = req.body;
+    if (!username || !password || !email || !phoneNumber) {
       const message = "Some parameters are missing";
       res.status(400).json({ success:false, message });
       throw new Error(message);
     }
-    if(await getUserByEmail(email)){
-        const message= "This email address already used"
+    if(await getUserByEmail(email) || await getUserByPhoneNumber(phoneNumber)){
+        const message= "Some parameters already used"
         res.status(400).json({success:false, message})
         throw new Error(message)
     }
-    const user: UserModel = await createUser(username, password, email);
+    const user: UserModel = await createUser(username, password, email,phoneNumber);
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
         expiresIn: process.env.TOKENDURATION || "1h",
       });

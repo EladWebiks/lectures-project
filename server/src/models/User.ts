@@ -7,6 +7,12 @@ const userSchema: Schema = new Schema({
         unique: true, 
         trim: true, 
     },
+    phoneNumber:{
+        type:String,
+        required: true,
+        unique:true,
+        trim: true,
+    },
     passwordHash: {
         type: String,
         required: true,
@@ -37,6 +43,7 @@ const userSchema: Schema = new Schema({
 export interface UserModel extends Document {
     _id: mongoose.Types.ObjectId;
     username: string;
+    phoneNumber: string;
     passwordHash: string;
     email:string,
     isAdmin: Boolean;

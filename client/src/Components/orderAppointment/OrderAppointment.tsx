@@ -7,7 +7,7 @@ import OneHourBox from "../OneHourBox/OneHourBox";
 import theme from "../../theme";
 import { Container, display } from "@mui/system";
 
-import freeTimes from "../../constant/tempHourArr";
+import freeTimes from "../../constants/tempHourArr";
 
 const style = (theme: any) => ({
   position: "absolute",

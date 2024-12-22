@@ -11,6 +11,7 @@ import { CssBaseline } from "@mui/material";
 import ContactPage from "./pages/ContactPage/ContactPage.tsx";
 import CalendarPage from "./pages/CalendarPage/CalendarPage.tsx";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.tsx";
+import PrivateRoute from "./auth/PrivateRoute.tsx";
 const App: FC = () => {
   const router = createBrowserRouter([
     {
@@ -19,7 +20,7 @@ const App: FC = () => {
       // layout
       children: [
         { path: "", element: <HomePage /> },
-        {path:"/profile", element: <ProfilePage/>},
+        {path:"/profile", element: <PrivateRoute component={<ProfilePage/>}></PrivateRoute>},
         {
           path: "/gallery",
           element: <GalleryPage />,
@@ -34,7 +35,7 @@ const App: FC = () => {
         },
         {
           path: "/calendar",
-          element: <CalendarPage />,
+          element: <PrivateRoute component={<CalendarPage />}></PrivateRoute>,
         },
         {
           path: "/profile",
