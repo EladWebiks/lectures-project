@@ -1,13 +1,15 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
+import './AppoitnmentInList.css'
 
 interface AppoitnmentInListInterface{
-    date: string,
-    description: string
+    date: Date,
+    description: string | undefined
 }
 const AppoitnmentInList: FC<AppoitnmentInListInterface> = ({date,description}) => {
+  date = new Date(date)
   return (
-    <div>
-        <p>{date} - {description}</p>
+    <div className='AppoitnmentInList'>
+        <p>{`${date?.toLocaleDateString()}: ${date.toLocaleTimeString()} - ${description}`}</p>
     </div>
   )
 }
