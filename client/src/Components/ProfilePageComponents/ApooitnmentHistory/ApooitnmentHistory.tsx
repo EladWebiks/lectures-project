@@ -1,40 +1,32 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AppoitnmentInList from '../AppoitnmentInList/AppoitnmentInList';
+import { UserModel } from '../../../types/schemas';
+
+interface AppointmentsHistoryInterFace
+{
+  user: UserModel | null
+}
 
 
-const appArr = [
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-    {date: "22/11/23 16:00",description: "mkad nud sanuad kmads sasadsad sadsa"},
-]
+const ApooitnmentHistory : React.FC <AppointmentsHistoryInterFace>= ({user})=> {
 
-
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-        Appoitment history:
-      </Typography>
-      <Typography variant="body2">
-      {appArr.map((app)=>{return <AppoitnmentInList date ={app.date} description={app.description}/>})}
-
-      </Typography>
-    </CardContent>
-  </React.Fragment>
-);
-
-export default function ApooitnmentHistory() {
+  const card = (
+    <React.Fragment>
+      <CardContent>
+        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+          Appoitment history:
+        </Typography>
+        <Typography variant="body2">
+        {user?.appointments.map((app)=>{return <AppoitnmentInList date ={app.start} description={app.description}/>})}
+  
+        </Typography>
+      </CardContent>
+    </React.Fragment>
+  );
   return (
     <Box>
       <Card sx={{
@@ -45,3 +37,5 @@ export default function ApooitnmentHistory() {
     </Box>
   );
 }
+
+export default ApooitnmentHistory;

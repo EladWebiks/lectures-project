@@ -32,7 +32,7 @@ const OutlinedCard: React.FC<NextAppointmentInterFace> = ({user})=> {
           {nextAppFormet?.toString()}
         </Typography>
         <Typography variant="h5" component="div" sx={{fontSize: 16}}>
-          {`${hourStrat?.toString()} - ${hourFinish?.toString()}`}
+          {nextapp &&`${hourStrat?.toString()} - ${hourFinish?.toString()}`}
         </Typography>
         
         <Typography variant="body2">

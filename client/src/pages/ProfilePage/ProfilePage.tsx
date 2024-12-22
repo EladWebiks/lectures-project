@@ -39,7 +39,7 @@ const ProfilePage = () => {
         </header>
         <div className="appointmenttDetails">
           <div className="AppointmentHistory">
-            <ApooitnmentHistory/>
+            <ApooitnmentHistory user= {user}/>
           </div>
           <div className="nextAppointment">
             <NextAppointment user={user} />
