@@ -5,30 +5,45 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { UserModel } from '../../../types/schemas';
+import closestAppointment from '../../../utilities/closestAppointment';
 
 
 
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-        next Appoitment:
-      </Typography>
-      <Typography variant="h5" component="div">
-        22/11/24
-      </Typography>
-      
-      <Typography variant="body2">
-        name of app
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Cancel Appoitment</Button>
-    </CardActions>
-  </React.Fragment>
-);
+interface NextAppointmentInterFace
+{
+  user: UserModel | null
+}
+const OutlinedCard: React.FC<NextAppointmentInterFace> = ({user})=> {
+  const nextapp = closestAppointment(user);
+  const nextAppFormet = nextapp?.start.toLocaleDateString();
+  const hourStrat =nextapp?.start.toLocaleTimeString();
+  const hourFinish =nextapp?.end.toLocaleTimeString();
 
-export default function OutlinedCard() {
+
+
+  const card = (
+    <React.Fragment>
+      <CardContent>
+        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+          next Appoitment:
+        </Typography>
+        <Typography variant="h5" component="div" sx={{fontSize: 16}}>
+          {nextAppFormet?.toString()}
+        </Typography>
+        <Typography variant="h5" component="div" sx={{fontSize: 16}}>
+          {`${hourStrat?.toString()} - ${hourFinish?.toString()}`}
+        </Typography>
+        
+        <Typography variant="body2">
+          {nextapp?.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Cancel Appoitment</Button>
+      </CardActions>
+    </React.Fragment>
+  );
   return (
     <Box>
       <Card sx={{
@@ -39,3 +54,4 @@ export default function OutlinedCard() {
     </Box>
   );
 }
+export default OutlinedCard
