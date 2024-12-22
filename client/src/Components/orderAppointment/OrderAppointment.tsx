@@ -10,6 +10,7 @@ import { Container, display } from "@mui/system";
 import freeTimes from "../../constants/tempHourArr";
 import axios from "axios";
 import { useMyContext } from "../../Context";
+import SelectFromPickAppointment from "../SelectFromPickAppointment/SelectFromPickAppointment";
 
 const style = (theme: any) => ({
   position: "absolute",
@@ -36,6 +37,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [pickedHour, setPickedHour] = React.useState<string>("");
+  const [description, setDescription] = React.useState<string>("");
 
   const {user} = useMyContext();
 
@@ -47,16 +49,15 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
     let end : Date | string = new Date(`${selectedDate}T${pickedHour}:00.152Z`); // Initialize the end date object
     end.setMinutes(end.getMinutes() + Number(import.meta.env.VITE_MINMARGIN)); // Add the minutes
     end = end.toISOString(); // Convert back to ISO string
-    
-    console.log(start);
-    console.log(end);
     const token = localStorage.getItem("authToken");
+    if(!description)
+      return;
     axios.post(
       `${import.meta.env.VITE_BURL}/appointments`,
       {
         start,
         end,
-        description: "dont forget to add description input",
+        description,
         id: user?._id,
       },
       {
@@ -98,6 +99,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
             >
               {`${selectedDate}`}
             </Typography>
+            
             <Box
               sx={{
                 display: "grid",
@@ -119,6 +121,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
                 );
               })}
             </Box>
+          
             <Box
               sx={{
                 display: "flex",
@@ -126,6 +129,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
                 paddingTop: "10%",
               }}
             >
+              <SelectFromPickAppointment  setDescription={setDescription}/>
               {pickedHour && (
                 <Button
                   onClick={saveTheDate}
