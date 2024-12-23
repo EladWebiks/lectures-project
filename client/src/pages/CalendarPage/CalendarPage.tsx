@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
@@ -11,11 +11,13 @@ const CalendarPage: React.FC = () => {
   const [newEventTitle, setNewEventTitle] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const currentDate = useRef<Date>(new Date())
 
   const handleDateClick = (arg: DateClickArg) => {
     if (arg.date.getDay() === 5 || arg.date.getDay() === 6) {
       return;
     }
+  if(new Date(arg.date) < new Date(currentDate.current)) return;
     setSelectedDate(arg.dateStr);
     setOpenModal(true);
   };
@@ -32,10 +34,18 @@ const CalendarPage: React.FC = () => {
     const date = new Date(arg.date);
     const day = date.getUTCDay();
     if (day === 4 || day === 5) return "weekend";
+    else if(new Date(date) < new Date(currentDate.current)){
+      return "passDate"
+    }
     else {
       return "";
     }
   };
+
+  useEffect(()=>{
+
+    console.log(currentDate.current)
+  },[])
 
   return (
     <div className="page" style={{ maxWidth: "900px", margin: "0 auto" }}>
@@ -60,7 +70,7 @@ const CalendarPage: React.FC = () => {
         editable={true}
       />
 
-      {selectedDate && (
+      {/* {selectedDate && (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <h4>הוסף אירוע לתאריך: {selectedDate}</h4>
           <input
@@ -78,7 +88,7 @@ const CalendarPage: React.FC = () => {
             הוסף אירוע
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

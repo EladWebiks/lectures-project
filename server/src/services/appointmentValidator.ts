@@ -5,8 +5,10 @@ export const appointmentValidator = async (
   start: Date,
   end: Date,
   id?: string
-): Promise<boolean> => {
+): Promise<{success:boolean, message?: string}> => {
   let { MINMARGIN, MAXMARGIN } = process.env;
+  let success = true;
+  let message="";
   const minMargin = parseInt(MINMARGIN || "0", 10);
   const maxMargin = parseInt(MAXMARGIN || "1440", 10);
 
@@ -14,13 +16,26 @@ export const appointmentValidator = async (
   const differenceInMinutes = differenceInMs / (1000 * 60);
 
   const noAppointments = await verifyNoAppointments(start, end, id);
+  if(!noAppointments)
+{
+  success = false;
+  message += " This time already taken! \n"
+}
+
   const notTooEarly = verifyNotTooEarly(start);
-  
+if(!notTooEarly)
+{
+  success = false;
+  message+= " This date already passed! \n"
+}
+if( ! (differenceInMinutes > minMargin &&
+  differenceInMinutes < maxMargin))
+  {
+    success= false;
+    message += ` The margin between the dates is smaller than ${minMargin} or higher than ${maxMargin}! \n`
+  }
   return (
-    differenceInMinutes > minMargin &&
-    differenceInMinutes < maxMargin &&
-    noAppointments &&
-    notTooEarly
+    {success, message}
   );
 };
 
