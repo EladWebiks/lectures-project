@@ -11,6 +11,7 @@ import freeTimes from "../../constants/tempHourArr";
 import axios from "axios";
 import { useMyContext } from "../../Context";
 import SelectFromPickAppointment from "../SelectFromPickAppointment/SelectFromPickAppointment";
+import { AppointmentModel } from "../../types/schemas";
 
 const style = (theme: any) => ({
   position: "absolute",
@@ -29,6 +30,12 @@ interface OrderAppointmentInterface {
   selectedDate: string | null;
 }
 
+interface resposneAppointmentInterface {
+  success: boolean;
+  message: string;
+  appointments: AppointmentModel[];
+}
+
 const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
   setOpenModal,
   selectedDate,
@@ -38,46 +45,66 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
   const handleClose = () => setOpen(false);
   const [pickedHour, setPickedHour] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
+  const { user, setReloadDb, reloadDb } = useMyContext();
+  const [takenTimes,setTakenTimes] = React.useState<string[]>([])
 
-  const {user,setReloadDb,reloadDb} = useMyContext();
 
   const saveTheDate = () => {
-    // let endhour:any= pickedHour.split(":") 
+    // let endhour:any= pickedHour.split(":")
     // endhour = `${(Number(endhour[1])/60+Number(endhour[0]))}:${(Number(endhour[1])+(Number(import.meta.env.VITE_MINMARGIN))%60)}`
-    const start = new Date(`${selectedDate}T${pickedHour}:00.152Z`).toISOString();
+    const start = new Date(
+      `${selectedDate}T${pickedHour}:00.152Z`
+    ).toISOString();
 
-    let end : Date | string = new Date(`${selectedDate}T${pickedHour}:00.152Z`); // Initialize the end date object
+    let end: Date | string = new Date(`${selectedDate}T${pickedHour}:00.152Z`); // Initialize the end date object
     end.setMinutes(end.getMinutes() + Number(import.meta.env.VITE_MINMARGIN)); // Add the minutes
     end = end.toISOString(); // Convert back to ISO string
     const token = localStorage.getItem("authToken");
-    if(!description)
-      return;
-    axios.post(
-      `${import.meta.env.VITE_BURL}/appointments`,
-      {
-        start,
-        end,
-        description,
-        id: user?._id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Fixed the header format
+    if (!description) return;
+    axios
+      .post(
+        `${import.meta.env.VITE_BURL}/appointments`,
+        {
+          start,
+          end,
+          description,
+          id: user?._id,
         },
-      }
-    )
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Fixed the header format
+          },
+        }
+      )
       .then(() => {
-        console.log('save date');
-        setReloadDb(!reloadDb)
-
+        console.log("save date");
+        setReloadDb(!reloadDb);
       })
       .catch((e) => {
         throw new Error(e);
       });
-    
-    
+
     setOpenModal(false);
   };
+
+  React.useEffect(() => {
+    const fetchAllAppointmentByDate = async () => {
+      const token = localStorage.getItem("authToken");
+      const allAppointment = await axios.get<resposneAppointmentInterface>(
+        `http://localhost:5000/appointments/${selectedDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Fixed the header format
+          },
+        }
+      );
+      console.log(allAppointment.data.appointments)
+      const hourOfTheTakenAppointment = allAppointment.data.appointments.map((app)=> app.start.toString().slice(app.start.toString().indexOf('T')+1,app.start.toString().indexOf(':')+3))
+      setTakenTimes(hourOfTheTakenAppointment);
+    };
+
+    fetchAllAppointmentByDate();
+  },[open]);
 
   return (
     <div>
@@ -101,7 +128,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
             >
               {`${selectedDate}`}
             </Typography>
-            
+
             <Box
               sx={{
                 display: "grid",
@@ -113,18 +140,20 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
                 alignItems: "center", // Center items vertically
               }}
             >
-              {freeTimes.map((hour) => {
+              {freeTimes.map((hour, idx) => {
                 return (
                   <OneHourBox
+                    key={idx}
                     pickedHour={pickedHour}
                     setPickedHour={setPickedHour}
                     hour={hour}
                     date={new Date(selectedDate || "01-01-2024")}
+                    taken = {takenTimes.includes(hour) ? true : false }
                   />
                 );
               })}
             </Box>
-          
+
             <Box
               sx={{
                 display: "flex",
@@ -132,7 +161,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
                 paddingTop: "10%",
               }}
             >
-              <SelectFromPickAppointment  setDescription={setDescription}/>
+              <SelectFromPickAppointment setDescription={setDescription} />
               {pickedHour && (
                 <Button
                   onClick={saveTheDate}

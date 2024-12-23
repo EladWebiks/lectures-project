@@ -12,3 +12,8 @@
 .pickedHour{
     background-color: #BFA25F;
 }
+
+.disabled{
+    pointer-events: none;
+    background-color: #cdbdbd;
+}
