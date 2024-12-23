@@ -98,7 +98,6 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
           },
         }
       );
-      console.log(allAppointment.data.appointments)
       const hourOfTheTakenAppointment = allAppointment.data.appointments.map((app)=> app.start.toString().slice(app.start.toString().indexOf('T')+1,app.start.toString().indexOf(':')+3))
       setTakenTimes(hourOfTheTakenAppointment);
     };
@@ -109,7 +108,6 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
   return (
     <div>
       <Container>
-        <Button onClick={handleOpen}>Open modal</Button>
         <Modal
           open={open}
           onClose={() => {

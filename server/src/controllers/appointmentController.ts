@@ -23,9 +23,9 @@ export const makeAppointment = async (
       res.status(400).json({ success: false, message });
       return;
     }
-    if (!(await appointmentValidator(start, end))) {
-      const message = "These times are unavailable";
-      res.status(403).json({ success: false, message });
+    const {message, success} = await appointmentValidator(start, end)
+    if (!success) {
+      res.status(403).json({ success, message });
       return;
     }
     const appointment = new Appointment({
