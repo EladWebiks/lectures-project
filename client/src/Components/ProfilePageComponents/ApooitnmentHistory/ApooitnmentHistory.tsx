@@ -14,6 +14,11 @@ interface AppointmentsHistoryInterFace
 
 const ApooitnmentHistory : React.FC <AppointmentsHistoryInterFace>= ({user})=> {
 
+  React.useEffect(()=>{
+   //@ts-ignore
+      user?.appointments.sort((a,b)=> (new Date(b.start).getTime() - new Date(a.start).getTime()))
+  },[])
+
   const card = (
     <React.Fragment>
       <CardContent>

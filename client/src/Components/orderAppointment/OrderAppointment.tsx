@@ -39,7 +39,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
   const [pickedHour, setPickedHour] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
 
-  const {user} = useMyContext();
+  const {user,setReloadDb,reloadDb} = useMyContext();
 
   const saveTheDate = () => {
     // let endhour:any= pickedHour.split(":") 
@@ -68,6 +68,8 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
     )
       .then(() => {
         console.log('save date');
+        setReloadDb(!reloadDb)
+
       })
       .catch((e) => {
         throw new Error(e);
@@ -117,6 +119,7 @@ const OrderAppointment: React.FC<OrderAppointmentInterface> = ({
                     pickedHour={pickedHour}
                     setPickedHour={setPickedHour}
                     hour={hour}
+                    date={new Date(selectedDate || "01-01-2024")}
                   />
                 );
               })}

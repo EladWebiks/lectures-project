@@ -16,6 +16,9 @@ interface MyContextType {
   logOut: () => void;
   toastData: toastData | null;
   setToastData: React.Dispatch<React.SetStateAction<toastData | null>>;
+  reloadDb: Boolean,
+  setReloadDb: React.Dispatch<React.SetStateAction<Boolean>>
+  
 }
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
@@ -35,6 +38,7 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<UserModel | null>(null);
   const [toastData, setToastData] = useState<toastData | null>(null);
+  const [reloadDb,setReloadDb] = useState<Boolean>(true);
   const fetchUser = async () => {
     const userData = await InitialFetchUser();
     setUser(userData);
@@ -44,9 +48,10 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(null);
     setToastData({ type: "info", content: "Logged out successfully" });
   };
+
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [reloadDb]);
 
   const value: MyContextType = {
     Links: {
@@ -69,6 +74,10 @@ export const MyProvider: React.FC<{ children: React.ReactNode }> = ({
     logOut,
     setToastData,
     toastData,
+    reloadDb,
+    setReloadDb
+    
+
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
