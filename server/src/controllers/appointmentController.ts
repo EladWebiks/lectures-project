@@ -127,6 +127,39 @@ export const getAppointmentsByDate = async (
     }
   };
 
+// Route: /appointments/month/:date
+// Method: GET
+// returns { success: boolean, message: string, appointments: appointment[]}
+export const getAppointmentsByMonth = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      let { date }: any = req.params;
+      const selectedDate = new Date(date);
+      const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+      endOfMonth.setHours(23, 59, 59, 999); // Set to the very last millisecond of the day
+      
+
+      const appointments: AppointmentModel[] = await Appointment.find({
+        start: { $gte: startOfMonth, $lte: endOfMonth },
+      }).select(String(process.env.GETAPPOINTMENTSBYDATEREMOVAL));
+  
+      res.status(200).json({
+        success: true,
+        message: "Appointments retrieved successfully",
+        appointments,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
 // Route: /appointments/:id
 // Method: PATCH
 // Body: {start, end, description}
